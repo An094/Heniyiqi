@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         SelectionScreen.SetActive(true);
         SignUpScreen.SetActive(false);
         EnterCodeScreen.SetActive(false);
+        MainScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         SelectionScreen.SetActive(false);
         SignUpScreen.SetActive(true);
         EnterCodeScreen.SetActive(false);
+        MainScreen.SetActive(false);
     }
 
     public void ShowEnterCodeScreen()
@@ -110,6 +112,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         SelectionScreen.SetActive(false);
         SignUpScreen.SetActive(false);
         EnterCodeScreen.SetActive(true);
+        MainScreen.SetActive(false);
     }
 
     public void ShowMainScreen()
