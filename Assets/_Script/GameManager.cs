@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject EnterCodeScreen;
     [SerializeField] private GameObject MainScreen;
 
-    public bool IsMale { get; set; }
+    public bool AmIMale { get; set; }
+    public string MyName { get; set; }
+    public string MyParterName { get; set; }
+    public SerializableDateTime FirstDay { get; set; }
+    public SerializableDateTime AccCreationDay { get; set; }
+
     public static GameManager instance { get; private set; }
+
+    public static event Action UpdateData;
 
     private void Awake()
     {
@@ -24,14 +32,56 @@ public class GameManager : MonoBehaviour, IDataPersistence
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private void OnEnable()
+    {
+        FileMonitor.FileModified += OnFileChanged;
+    }
+
+    private void OnDisable()
+    {
+        FileMonitor.FileModified -= OnFileChanged;
+    }
+
+    private void OnFileChanged()
+    {
+        DataPersistenceManager.instance.LoadGame();
+        UpdateData?.Invoke();
+    }
+
     public void LoadData(GameData data)
     {
+        FirstDay = data.FirstDay;
+        AccCreationDay = data.AccCreationDay;
 
+        if(MyName != null && MyName.Length > 0)
+        {
+            MyParterName = AmIMale ? data.Female.Name : data.Male.Name;
+        }
     }
 
     public void SaveData(GameData data)
     {
+        if (AmIMale)
+        {
+            data.Male.Name = MyName;
+            data.Female.Name = MyParterName;
+        }
+        else
+        {
+            data.Female.Name = MyName;
+            data.Male.Name = MyParterName;
+        }
 
+        data.FirstDay = FirstDay;
+        data.AccCreationDay = AccCreationDay;
+    }
+
+    public int GetTogetherDays()
+    {
+        DateTime now = DateTime.Now;
+        DateTime firstDay = FirstDay.ToDateTime();
+        TimeSpan duration = now - firstDay;
+        return duration.Days;
     }
 
     // Start is called before the first frame update

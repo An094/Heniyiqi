@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnterCodeScreen : MonoBehaviour, IDataPersistence  
+public class EnterCodeScreen : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_InputField NameInputField;
     [SerializeField] TMPro.TMP_InputField CodeInputField;
@@ -29,32 +29,16 @@ public class EnterCodeScreen : MonoBehaviour, IDataPersistence
         Code = CodeInputField.text;
         if(Code.Length > 0)
         {
-            DataPersistenceManager.instance.Initialize(Code, false);
+
+            IsMale = Code[Code.Length - 1].Equals("M");
+            GameManager.instance.AmIMale = IsMale;
+
+            GameManager.instance.MyName = Name;
+
+            DataPersistenceManager.instance.Initialize(Code, IsMale);
+
             DataPersistenceManager.instance.SaveGame();
+            GameManager.instance.ShowMainScreen();
         }
-    }
-
-    public void LoadData(GameData data)
-    {
-        if (data.Male.Name.Length > 0)
-        {
-            IsMale = false;
-        }
-    }
-
-    public void SaveData(GameData data)
-    {
-        if (gameObject.activeSelf)
-        {
-            if (IsMale)
-            {
-                data.Male.Name = Name;
-            }
-            else
-            {
-                data.Female.Name = Name;
-            }
-        }    
-
     }
 }

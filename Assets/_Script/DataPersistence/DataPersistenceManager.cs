@@ -16,7 +16,7 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("Auto Saving Configuration")]
     [SerializeField] private float autoSaveTimeSeconds = 60f;
 
-    private GameData GameData;
+    public GameData GameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler FileDataHandler;
 

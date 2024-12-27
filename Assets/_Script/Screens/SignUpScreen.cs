@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class SignUpScreen : MonoBehaviour, IDataPersistence
+public class SignUpScreen : MonoBehaviour//, IDataPersistence
 {
     [Header("Login")]
     [SerializeField] TMPro.TMP_InputField NameInputField;
@@ -44,6 +44,7 @@ public class SignUpScreen : MonoBehaviour, IDataPersistence
     private void OnPlayBtnClicked()
     {
         DataPersistenceManager.instance.SaveGame();
+        GameManager.instance.ShowMainScreen();
     }
 
     private void OnBtnSubmitClicked()
@@ -53,13 +54,14 @@ public class SignUpScreen : MonoBehaviour, IDataPersistence
         if (Name.Length > 0)
         {
             HashedName = GenerateHash(Name);
-            Debug.Log("HashedName: " + HashedName);
+            IsMale = ToggleMale.isOn;
+            HashedName += IsMale ? "M" : "F";
+
             Id.text = HashedName;
             Id.transform.gameObject.SetActive(true);
             GenerateBtn.gameObject.SetActive(false);
             PlayBtn.gameObject.SetActive(true);
 
-            IsMale = ToggleMale.isOn;
 
             int day = DropDownDay.value + 1;
             int month = DropDownMonth.value + 1;
@@ -70,6 +72,11 @@ public class SignUpScreen : MonoBehaviour, IDataPersistence
             AccCreationDay = new SerializableDateTime(DateTime.Now);
 
             DataPersistenceManager.instance.Initialize(HashedName, IsMale);
+
+            GameManager.instance.AmIMale = IsMale;
+            GameManager.instance.FirstDay = FirstDay;
+            GameManager.instance.AccCreationDay = AccCreationDay;
+            GameManager.instance.MyName = Name;
         }
 
     }
@@ -81,28 +88,6 @@ public class SignUpScreen : MonoBehaviour, IDataPersistence
             byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
             string base64String = Convert.ToBase64String(hashBytes);
             return base64String.Substring(0, 3);
-        }
-    }
-
-    public void LoadData(GameData data)
-    {
-        //noop
-    }
-
-    public void SaveData(GameData data)
-    {
-        if (gameObject.activeSelf)
-        {
-            data.AccCreationDay = AccCreationDay;
-            data.FirstDay = FirstDay;
-            if (IsMale)
-            {
-                data.Male.Name = Name;
-            }
-            else
-            {
-                data.Female.Name = Name;
-            }
         }
     }
 }

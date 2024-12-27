@@ -32,6 +32,7 @@ public class FileDataHandler
         GameData loadedData = null;
         if (File.Exists(fullPath))
         {
+            FileMonitor.Initialize(fullPath);
             try
             {
                 // load the serialized data from the file
