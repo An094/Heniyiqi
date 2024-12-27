@@ -9,6 +9,7 @@ public class GameData
 {
     public SerializableDateTime FirstDay;
     public SerializableDateTime AccCreationDay;
+    public ECatState CatState;
     public int CurrentCatFood;
     public int CurrentQuestionId;
     public PersonData Male;
@@ -18,6 +19,7 @@ public class GameData
     {
         FirstDay = new SerializableDateTime(DateTime.MinValue);
         AccCreationDay = new SerializableDateTime(DateTime.MinValue);
+        CatState = ECatState.InBox;
         CurrentCatFood = 0;
         CurrentQuestionId = 0;
         Male = new();
@@ -71,4 +73,13 @@ public enum Emotion
     Sad,
     Sick,
     Lonely
+}
+
+public enum ECatState
+{
+    InBox,
+    Eating,
+    Cry,
+    Dance,
+    Sleep
 }

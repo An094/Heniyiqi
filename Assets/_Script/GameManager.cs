@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject SignUpScreen;
     [SerializeField] private GameObject EnterCodeScreen;
     [SerializeField] private GameObject MainScreen;
+    [SerializeField] private Cat Cat;
 
     public bool AmIMale { get; set; }
     public string MyName { get; set; }
@@ -100,6 +101,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
     void Update()
     {
 
+    }
+
+    public void FeedTheCat()
+    {
+        CurrentCatFood -= 1;
+        Cat.Eat();
     }
 
     public void ShowSignUpScreen()

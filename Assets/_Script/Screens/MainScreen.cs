@@ -10,6 +10,7 @@ public class MainScreen : MonoBehaviour
     [SerializeField] Text PartnerName;
     [SerializeField] Text TogetherDays;
     [SerializeField] Text CurrentCatFood;
+    [SerializeField] Button FoodBtn;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,20 @@ public class MainScreen : MonoBehaviour
     {
         UpdateData();
         GameManager.UpdateData += UpdateData;
+        FoodBtn.onClick.AddListener(FeedTheCat);
     }
 
     private void OnDisable()
     {
         GameManager.UpdateData -= UpdateData;
+        FoodBtn.onClick.RemoveListener(FeedTheCat);
+    }
+
+    private void FeedTheCat()
+    {
+        GameManager.instance.FeedTheCat();
+        int catFood = GameManager.instance.CurrentCatFood;
+        CurrentCatFood.text = $"x{catFood}";
     }
 
     private void UpdateData()

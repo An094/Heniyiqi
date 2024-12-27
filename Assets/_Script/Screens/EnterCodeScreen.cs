@@ -30,12 +30,12 @@ public class EnterCodeScreen : MonoBehaviour
         if(Code.Length > 0)
         {
 
-            IsMale = Code[Code.Length - 1].Equals("M");
-            GameManager.instance.AmIMale = IsMale;
+            bool createdCodeByMale = Code[Code.Length - 1].Equals("M");
+            GameManager.instance.AmIMale = !createdCodeByMale;
 
             GameManager.instance.MyName = Name;
 
-            DataPersistenceManager.instance.Initialize(Code, IsMale);
+            DataPersistenceManager.instance.Initialize(Code, !createdCodeByMale);
 
             DataPersistenceManager.instance.SaveGame();
             GameManager.instance.ShowMainScreen();
