@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public string MyParterName { get; set; }
     public SerializableDateTime FirstDay { get; set; }
     public SerializableDateTime AccCreationDay { get; set; }
+    public int CurrentCatFood { get; set; }
 
     public static GameManager instance { get; private set; }
 
@@ -52,8 +53,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         FirstDay = data.FirstDay;
         AccCreationDay = data.AccCreationDay;
+        CurrentCatFood = data.CurrentCatFood;
 
-        if(MyName != null && MyName.Length > 0)
+        if (MyName != null && MyName.Length > 0)
         {
             MyParterName = AmIMale ? data.Female.Name : data.Male.Name;
         }
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         data.FirstDay = FirstDay;
         data.AccCreationDay = AccCreationDay;
+        data.CurrentCatFood = CurrentCatFood;
     }
 
     public int GetTogetherDays()

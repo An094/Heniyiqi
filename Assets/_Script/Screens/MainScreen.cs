@@ -9,6 +9,7 @@ public class MainScreen : MonoBehaviour
     [SerializeField] Text MyName;
     [SerializeField] Text PartnerName;
     [SerializeField] Text TogetherDays;
+    [SerializeField] Text CurrentCatFood;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class MainScreen : MonoBehaviour
 
     private void OnEnable()
     {
+        UpdateData();
         GameManager.UpdateData += UpdateData;
     }
 
@@ -29,8 +31,10 @@ public class MainScreen : MonoBehaviour
     {
         MyName.text = GameManager.instance.MyName;
         PartnerName.text = GameManager.instance.MyParterName;
+        int catFood = GameManager.instance.CurrentCatFood;
+        CurrentCatFood.text = $"x{catFood}"; 
         int day = GameManager.instance.GetTogetherDays();
-        TogetherDays.text = "Together for " + day + "days";
+        TogetherDays.text = day.ToString();
     }
 
     // Update is called once per frame

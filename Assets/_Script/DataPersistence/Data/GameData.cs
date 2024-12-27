@@ -9,7 +9,7 @@ public class GameData
 {
     public SerializableDateTime FirstDay;
     public SerializableDateTime AccCreationDay;
-    public int CurrentScore;
+    public int CurrentCatFood;
     public int CurrentQuestionId;
     public PersonData Male;
     public PersonData Female;
@@ -18,7 +18,7 @@ public class GameData
     {
         FirstDay = new SerializableDateTime(DateTime.MinValue);
         AccCreationDay = new SerializableDateTime(DateTime.MinValue);
-        CurrentScore = 0;
+        CurrentCatFood = 0;
         CurrentQuestionId = 0;
         Male = new();
         Female = new();
