@@ -5,11 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private GameObject SelectionScreen;
-    [SerializeField] private GameObject SignUpScreen;
-    [SerializeField] private GameObject EnterCodeScreen;
-    [SerializeField] private GameObject MainScreen;
-    [SerializeField] private Cat Cat;
+    [SerializeField] private ScreenManager ScreenManager;
 
     public bool AmIMale { get; set; }
     public string MyName { get; set; }
@@ -56,9 +52,22 @@ public class GameManager : MonoBehaviour, IDataPersistence
         AccCreationDay = data.AccCreationDay;
         CurrentCatFood = data.CurrentCatFood;
 
-        if (MyName != null && MyName.Length > 0)
+        if(data.Male.Name == MyName && MyName != null)
         {
-            MyParterName = AmIMale ? data.Female.Name : data.Male.Name;
+            AmIMale = true;
+            MyParterName = data.Female.Name;
+        }
+        else if(data.Female.Name == MyName && MyName != null)
+        {
+            AmIMale = false;
+            MyParterName = data.Male.Name;
+        }
+        else
+        {
+            if (MyName != null && MyName.Length > 0)
+            {
+                MyParterName = AmIMale ? data.Female.Name : data.Male.Name;
+            }
         }
     }
 
@@ -91,45 +100,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        SelectionScreen.SetActive(true);
-        SignUpScreen.SetActive(false);
-        EnterCodeScreen.SetActive(false);
-        MainScreen.SetActive(false);
+        ScreenManager.Initialize(ScreenType.Selection);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-
-    public void FeedTheCat()
-    {
-        CurrentCatFood -= 1;
-        Cat.Eat();
-    }
-
-    public void ShowSignUpScreen()
-    {
-        SelectionScreen.SetActive(false);
-        SignUpScreen.SetActive(true);
-        EnterCodeScreen.SetActive(false);
-        MainScreen.SetActive(false);
-    }
-
-    public void ShowEnterCodeScreen()
-    {
-        SelectionScreen.SetActive(false);
-        SignUpScreen.SetActive(false);
-        EnterCodeScreen.SetActive(true);
-        MainScreen.SetActive(false);
-    }
-
-    public void ShowMainScreen()
-    {
-        SelectionScreen.SetActive(false);
-        SignUpScreen.SetActive(false);
-        EnterCodeScreen.SetActive(false);
-        MainScreen.SetActive(true);
     }
 }

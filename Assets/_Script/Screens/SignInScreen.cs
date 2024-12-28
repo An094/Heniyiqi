@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnterCodeScreen : ScreenBase
+public class SignInScreen : ScreenBase
 {
     [SerializeField] TMPro.TMP_InputField NameInputField;
     [SerializeField] TMPro.TMP_InputField CodeInputField;
@@ -24,22 +24,17 @@ public class EnterCodeScreen : ScreenBase
     {
         PlayBtn.onClick.RemoveListener(OnPlayBtnClicked);
     }
+
     private void OnPlayBtnClicked()
     {
         Name = NameInputField.text;
         Code = CodeInputField.text;
-        if(Code.Length > 0)
+        if (Code.Length > 0)
         {
-
-            bool createdCodeByMale = Code.Last() == 'M';
-            GameManager.instance.AmIMale = !createdCodeByMale;
-
             GameManager.instance.MyName = Name;
-
-            DataPersistenceManager.instance.Initialize(Code, !createdCodeByMale);
-
-            DataPersistenceManager.instance.SaveGame();
+            DataPersistenceManager.instance.Initialize(Code, true);
             ScreenManager.Push(ScreenType.MainScreen);
         }
     }
+
 }

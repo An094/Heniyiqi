@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainScreen : MonoBehaviour
+public class MainScreen : ScreenBase
 {
     [SerializeField] Text MyName;
     [SerializeField] Text PartnerName;
     [SerializeField] Text TogetherDays;
     [SerializeField] Text CurrentCatFood;
     [SerializeField] Button FoodBtn;
+
+    [SerializeField] private Cat Cat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +35,8 @@ public class MainScreen : MonoBehaviour
 
     private void FeedTheCat()
     {
-        GameManager.instance.FeedTheCat();
+        GameManager.instance.CurrentCatFood -= 1;
+        Cat.Eat();
         int catFood = GameManager.instance.CurrentCatFood;
         CurrentCatFood.text = $"x{catFood}";
     }

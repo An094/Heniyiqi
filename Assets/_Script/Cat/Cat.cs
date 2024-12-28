@@ -37,7 +37,7 @@ public class Cat : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if(gameObject.activeInHierarchy)
+        //if(gameObject.activeInHierarchy)
         {
             CatState = data.CatState;
 

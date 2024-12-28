@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class SignUpScreen : MonoBehaviour//, IDataPersistence
+public class SignUpScreen : ScreenBase
 {
     [Header("Login")]
     [SerializeField] TMPro.TMP_InputField NameInputField;
@@ -44,7 +44,7 @@ public class SignUpScreen : MonoBehaviour//, IDataPersistence
     private void OnPlayBtnClicked()
     {
         DataPersistenceManager.instance.SaveGame();
-        GameManager.instance.ShowMainScreen();
+        ScreenManager.Push(ScreenType.MainScreen);
     }
 
     private void OnBtnSubmitClicked()

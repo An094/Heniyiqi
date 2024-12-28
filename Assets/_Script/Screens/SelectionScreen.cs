@@ -4,31 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectionScreen : MonoBehaviour
+public class SelectionScreen : ScreenBase
 {
-    [SerializeField] private Button CreateAccoutBtn;
-    [SerializeField] private Button EnterCodeBtn;
-    
-    // Start is called before the first frame update
-    void OnEnable()
+    [SerializeField] Button SignUpButton;
+    [SerializeField] Button SignInButton;
+    private void OnEnable()
     {
-        CreateAccoutBtn.onClick.AddListener(OnCreateAccountBtnClicked);
-        EnterCodeBtn.onClick.AddListener(OnEnterCodeBtnClicked);
+        SignUpButton.onClick.AddListener(OnSignUpBtnClicked);
+        SignInButton.onClick.AddListener(OnSignInBtnClicked);
     }
 
     private void OnDisable()
     {
-        CreateAccoutBtn.onClick.RemoveListener(OnCreateAccountBtnClicked);
-        EnterCodeBtn.onClick.RemoveListener(OnEnterCodeBtnClicked);
+        SignUpButton.onClick.RemoveListener(OnSignUpBtnClicked);
+        SignInButton.onClick.RemoveListener(OnSignInBtnClicked);
     }
 
-    private void OnEnterCodeBtnClicked()
+    private void OnSignInBtnClicked()
     {
-        GameManager.instance.ShowEnterCodeScreen();
+        ScreenManager.Push(ScreenType.SignIn);
     }
 
-    private void OnCreateAccountBtnClicked()
+    private void OnSignUpBtnClicked()
     {
-        GameManager.instance.ShowSignUpScreen();
+        ScreenManager.Push(ScreenType.SignUpSelection);
     }
+
 }
