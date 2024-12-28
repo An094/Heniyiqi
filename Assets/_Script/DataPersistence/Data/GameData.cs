@@ -14,6 +14,7 @@ public class GameData
     public int CurrentQuestionId;
     public PersonData Male;
     public PersonData Female;
+    public List<QuestionAndAnswer> QuestionsAndAnswers;
 
     public GameData()
     {
@@ -24,6 +25,7 @@ public class GameData
         CurrentQuestionId = 0;
         Male = new();
         Female = new();
+        QuestionsAndAnswers = new();
     }
 }
 
@@ -47,13 +49,11 @@ public class SerializableDateTime
 public class PersonData
 {
     public string Name;
-    public List<QuestionAndAnswer> QuestionAndAnswers;
     public List<Emotion> Emotions;
 
     public PersonData()
     {
         Name = "";
-        QuestionAndAnswers = new();
         Emotions = new();
     }
 }
@@ -61,8 +61,20 @@ public class PersonData
 [Serializable]
 public class QuestionAndAnswer
 {
+    public int QuestionId;
+    public bool IsLocked;
     public string Question;
-    public string Answer;
+    public string MaleAnswer;
+    public string FemaleAnswer;
+
+    public QuestionAndAnswer()
+    {
+        QuestionId = 0;
+        IsLocked = true;
+        Question = null;
+        MaleAnswer = null;
+        FemaleAnswer = null;
+    }
 }
 
 public enum Emotion

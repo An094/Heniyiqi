@@ -25,13 +25,9 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
         OnTabClicked(this);
     }
 
-    private void Awake()
-    {
-        TabImg = gameObject.GetComponent<Image>();
-    }
-
     public void SetState(TabBtnState tabBtnState)
     {
+        TabImg = gameObject.GetComponent<Image>();
         switch (tabBtnState)
         {
             case TabBtnState.Select:

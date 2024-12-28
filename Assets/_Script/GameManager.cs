@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private ScreenManager ScreenManager;
+    [SerializeField] public List<QuestionAndAnswer> QuestionAndAnswers;
 
     public bool AmIMale { get; set; }
     public string MyName { get; set; }
@@ -13,10 +15,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public SerializableDateTime FirstDay { get; set; }
     public SerializableDateTime AccCreationDay { get; set; }
     public int CurrentCatFood { get; set; }
-
+    
     public static GameManager instance { get; private set; }
 
     public static event Action UpdateData;
+    public event Action<int> ShowNotifcation;
 
     private void Awake()
     {
@@ -69,6 +72,22 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 MyParterName = AmIMale ? data.Female.Name : data.Male.Name;
             }
         }
+
+        if(data.QuestionsAndAnswers.Count > 0)
+        {
+            foreach(var question in data.QuestionsAndAnswers)
+            {
+                QuestionAndAnswer QnA = QuestionAndAnswers.First(qna => qna.Question == question.Question);
+                if(QnA != null)
+                {
+                    QnA.IsLocked = question.IsLocked;
+                    QnA.MaleAnswer = question.MaleAnswer;
+                    QnA.FemaleAnswer = question.FemaleAnswer;
+                    QnA.Question = question.Question;
+                    QnA.QuestionId = question.QuestionId;
+                }
+            }
+        }
     }
 
     public void SaveData(GameData data)
@@ -87,6 +106,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.FirstDay = FirstDay;
         data.AccCreationDay = AccCreationDay;
         data.CurrentCatFood = CurrentCatFood;
+
+        data.QuestionsAndAnswers.Clear();
+        foreach (var qna in QuestionAndAnswers)
+        {
+            data.QuestionsAndAnswers.Add(qna);
+        }
     }
 
     public int GetTogetherDays()
@@ -97,15 +122,19 @@ public class GameManager : MonoBehaviour, IDataPersistence
         return duration.Days;
     }
 
-    // Start is called before the first frame update
+    public void BeginGamePlay()
+    {
+        ShowQuestionNotification();
+    }
+
+    public void ShowQuestionNotification()
+    {
+        //TODO
+        ShowNotifcation.Invoke(0);
+    }
+
     void Start()
     {
         ScreenManager.Initialize(ScreenType.Selection);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

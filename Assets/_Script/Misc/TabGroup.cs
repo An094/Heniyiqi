@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,9 @@ public class TabGroup : MonoBehaviour
     [SerializeField] private List<TabButton> TabButtons;
     private TabButton SelectedTab;
 
-    private void Start()
+    public event Action<int> OnTabChanged;
+
+    public void Initialize()
     {
         foreach (TabButton tab in TabButtons)
         {
@@ -36,6 +39,22 @@ public class TabGroup : MonoBehaviour
     private void OnTabClicked(TabButton tab)
     {
         ResetTabs();
-        TabButtons.Find(tabBtn => tabBtn == tab)?.SetState(TabBtnState.Select);
+        //TabButtons.Find(tabBtn => tabBtn == tab)?.SetState(TabBtnState.Select);
+        for(int i = 0; i < TabButtons.Count; i++)
+        {
+            if (TabButtons[i] == tab)
+            {
+                TabButtons[i].SetState(TabBtnState.Select);
+                OnTabChanged.Invoke(i);
+                break;
+            }
+        }
+    }
+
+    public void SetSelectionTab(int index)
+    {
+        ResetTabs();
+        TabButtons[index].SetState(TabBtnState.Select);
+        //OnTabChanged.Invoke(index);
     }
 }

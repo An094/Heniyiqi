@@ -272,6 +272,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScreenManager: {fileID: 1744375159}
+  QuestionAndAnswers:
+  - QuestionId: 0
+    IsLocked: 0
+    Question: What makes you feel the most loved?
+    MaleAnswer: 
+    FemaleAnswer: 
+  - QuestionId: 1
+    IsLocked: 1
+    Question: "When you\u2019re worried, how can I support you best?"
+    MaleAnswer: 
+    FemaleAnswer: 
+  - QuestionId: 2
+    IsLocked: 1
+    Question: How do you want me to react when you face challenges?
+    MaleAnswer: 
+    FemaleAnswer: 
+  - QuestionId: 3
+    IsLocked: 1
+    Question: What impressed you most about our first date?
+    MaleAnswer: 
+    FemaleAnswer: 
+  - QuestionId: 4
+    IsLocked: 1
+    Question: When did you realize you were in love with me?
+    MaleAnswer: 
+    FemaleAnswer: 
 --- !u!114 &658691343
 MonoBehaviour:
   m_ObjectHideFlags: 0
