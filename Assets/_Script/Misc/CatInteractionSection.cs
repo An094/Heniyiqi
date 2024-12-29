@@ -39,7 +39,7 @@ public class CatInteractionSection : MainSection
 
     public void FeedTheCat()
     {
-        GameManager.instance.CurrentCatFood -= 1;
+        GameManager.instance.ChangeCatFood(-1);
         Cat.Eat();
     }
 }

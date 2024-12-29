@@ -274,7 +274,7 @@ MonoBehaviour:
   ScreenManager: {fileID: 1744375159}
   QuestionAndAnswers:
   - QuestionId: 0
-    IsLocked: 0
+    IsLocked: 1
     Question: What makes you feel the most loved?
     MaleAnswer: 
     FemaleAnswer: 

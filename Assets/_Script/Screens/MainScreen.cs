@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +10,8 @@ public enum MainSectionType
 {
     CatInteraction,
     QnAList,
-    EnterAnswer
+    EnterAnswer,
+    Answer
 }
 
 [Serializable]
@@ -104,6 +104,8 @@ public class MainScreen : ScreenBase
         CurrentCatFood.text = $"x{catFood}";
         int day = GameManager.instance.GetTogetherDays();
         TogetherDays.text = day.ToString();
+
+        FoodBtn.gameObject.GetComponentInParent<CatFoodAnimation>().Show();
     }
 
     public void ShowNotification(int questionId)
@@ -112,5 +114,11 @@ public class MainScreen : ScreenBase
         IsShowNotification = true;
         QuestionId = questionId;
         Push(MainSectionType.CatInteraction);
+    }
+
+    public void ShowAnswerOfQuestion(int questionId)
+    {
+        Push(MainSectionType.Answer);
+        CurrentSection.GetComponent<AnswerSection>()?.SetData(questionId);
     }
 }

@@ -50,17 +50,28 @@ public class EnterAnswerSection : MainSection
         string myAnswer = MyAnswer.text;
         if(myAnswer != null && myAnswer.Length > 0)
         {
-            GameManager.instance.QuestionAndAnswers[CurrentQuestionId].IsLocked = false;
+            QuestionAndAnswer QnA = GameManager.instance.QuestionAndAnswers[CurrentQuestionId];
+
             if(AmIMale)
             {
-                GameManager.instance.QuestionAndAnswers[CurrentQuestionId].MaleAnswer = myAnswer;
+                QnA.MaleAnswer = myAnswer;
             }
             else
             {
-                GameManager.instance.QuestionAndAnswers[CurrentQuestionId].FemaleAnswer = myAnswer;
+                QnA.FemaleAnswer = myAnswer;
+            }
+
+            QnA.IsLocked = false;
+            if(QnA.MaleAnswer.Length > 0 && QnA.FemaleAnswer.Length > 0)
+            {
+                GameManager.instance.ChangeCatFood(1);
             }
             DataPersistenceManager.instance.SaveGame();
             MainScreen.IsShowNotification = false;
+            MainScreen.Push(MainSectionType.CatInteraction);
+        }
+        else
+        {
             MainScreen.Push(MainSectionType.CatInteraction);
         }
     }

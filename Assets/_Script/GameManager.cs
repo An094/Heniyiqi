@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public string MyParterName { get; set; }
     public SerializableDateTime FirstDay { get; set; }
     public SerializableDateTime AccCreationDay { get; set; }
-    public int CurrentCatFood { get; set; }
+    public int CurrentCatFood { get; private set; }
     
     public static GameManager instance { get; private set; }
 
@@ -114,6 +114,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void ChangeCatFood(int changedValue)
+    {
+        if(CurrentCatFood + changedValue >= 0)
+        {
+            CurrentCatFood += changedValue;
+        }
+        UpdateData?.Invoke();
+    }
+
     public int GetTogetherDays()
     {
         DateTime now = DateTime.Now;
@@ -124,13 +133,47 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void BeginGamePlay()
     {
-        ShowQuestionNotification();
+        int currentQuestionId = GetCurrentQuestionId();
+
+        DateTime now = DateTime.Now;
+        DateTime currentDay = now.Date;
+        DateTime accCreationDay = AccCreationDay.ToDateTime().Date;
+        TimeSpan difference = currentDay - accCreationDay;
+        int differenceDays = difference.Days;
+
+        if(differenceDays >= currentQuestionId)
+        {
+            bool hasAnswered = false;
+            if(AmIMale)
+            {
+                hasAnswered = QuestionAndAnswers[currentQuestionId].MaleAnswer.Length > 0;
+            }
+            else
+            {
+                hasAnswered = QuestionAndAnswers[currentQuestionId].FemaleAnswer.Length > 0;
+            }
+
+            if(!hasAnswered)
+            {
+                ShowQuestionNotification(currentQuestionId);
+            }
+        }
+
     }
 
-    public void ShowQuestionNotification()
+    private int GetCurrentQuestionId()
     {
-        //TODO
-        ShowNotifcation.Invoke(0);
+        QuestionAndAnswer questionAndAnswer = QuestionAndAnswers.First(p => p.MaleAnswer.Length == 0 || p.FemaleAnswer.Length == 0);
+        if(questionAndAnswer != null)
+        {
+            return questionAndAnswer.QuestionId;
+        }
+        return 0;
+    }
+
+    public void ShowQuestionNotification(int QuestionId)
+    {
+        ShowNotifcation.Invoke(QuestionId);
     }
 
     void Start()

@@ -14,7 +14,7 @@ public class QuestionAndAnswersSection : MainSection
         {
             GameObject QnAObj = GameObject.Instantiate(QnATemplate, Content);
             QuestionItem questionItem = QnAObj.GetComponent<QuestionItem>();
-            questionItem.Initialize(QnA.Question, QnA.IsLocked);
+            questionItem.Initialize(QnA.Question, QnA.IsLocked, QnA.QuestionId, MainScreen);
         }
     }
 }
