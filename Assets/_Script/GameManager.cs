@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public SerializableDateTime FirstDay { get; set; }
     public SerializableDateTime AccCreationDay { get; set; }
     public int CurrentCatFood { get; private set; }
-    
+    public int CurrentHappyPoint { get; set; }
+    public ECatState CatState { get; set; }
+
     public static GameManager instance { get; private set; }
 
     public static event Action UpdateData;
@@ -88,6 +90,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 }
             }
         }
+
+        if (data.HappyPoint == 0 && data.CatState == 0)
+        {
+            CurrentHappyPoint = 50;
+        }
+        else
+        {
+            CurrentHappyPoint = data.HappyPoint;
+        }
+
+        CatState = data.CatState;
     }
 
     public void SaveData(GameData data)
@@ -112,6 +125,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             data.QuestionsAndAnswers.Add(qna);
         }
+
+        data.CatState = CatState;
+        data.HappyPoint = CurrentHappyPoint;
     }
 
     public void ChangeCatFood(int changedValue)
@@ -161,7 +177,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     }
 
-    private int GetCurrentQuestionId()
+    public int GetCurrentQuestionId()
     {
         QuestionAndAnswer questionAndAnswer = QuestionAndAnswers.First(p => p.MaleAnswer.Length == 0 || p.FemaleAnswer.Length == 0);
         if(questionAndAnswer != null)

@@ -11,7 +11,8 @@ public enum MainSectionType
     CatInteraction,
     QnAList,
     EnterAnswer,
-    Answer
+    Answer,
+    Calendar
 }
 
 [Serializable]
@@ -80,6 +81,11 @@ public class MainScreen : ScreenBase
             case 1:
                 {
                     Push(MainSectionType.QnAList);
+                }
+                break;
+            case 2:
+                {
+                    Push(MainSectionType.Calendar);
                 }
                 break;
         }

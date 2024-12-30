@@ -230,6 +230,8 @@ MonoBehaviour:
     MainSectionPrefab: {fileID: 1101285051574776708, guid: c3e2f1afa2886464e8b040c5b4d8da60, type: 3}
   - MainSectionType: 3
     MainSectionPrefab: {fileID: 1101285051574776708, guid: f2085d6aba462264d8b2b0e54f3426a1, type: 3}
+  - MainSectionType: 4
+    MainSectionPrefab: {fileID: 5820408370024068519, guid: 786416be103adfc409c8cccf462b0291, type: 3}
   MyName: {fileID: 2853744247432329249}
   PartnerName: {fileID: 607155851651252858}
   TogetherDays: {fileID: 1184788872028478874}
