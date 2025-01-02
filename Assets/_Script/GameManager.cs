@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private ScreenManager ScreenManager;
     [SerializeField] public List<QuestionAndAnswer> QuestionAndAnswers;
+    [SerializeField] public List<QuestData> QuestData;
 
     public bool AmIMale { get; set; }
     public string MyName { get; set; }
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public static event Action UpdateData;
     public event Action<int> ShowNotifcation;
+    public event Action<int> QuestNotification;
 
     private void Awake()
     {
@@ -91,6 +93,22 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
         }
 
+        if(data.Quests.Count > 0)
+        {
+            foreach(var quest in data.Quests)
+            {
+                QuestData Quest = QuestData.First(q => q.Quest == quest.Quest);
+                if(Quest != null)
+                {
+                    Quest.IsLocked = quest.IsLocked;
+                    Quest.QuestId = quest.QuestId;
+                    Quest.Quest = quest.Quest;
+                    Quest.MaleFeeling = quest.MaleFeeling;
+                    Quest.FemaleFeeling = quest.FemaleFeeling;
+                }
+            }
+        }
+
         if (data.HappyPoint == 0 && data.CatState == 0)
         {
             CurrentHappyPoint = 50;
@@ -126,6 +144,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
             data.QuestionsAndAnswers.Add(qna);
         }
 
+        data.Quests.Clear();
+        foreach (var quest in QuestData)
+        {
+            data.Quests.Add(quest);
+        }
+
         data.CatState = CatState;
         data.HappyPoint = CurrentHappyPoint;
     }
@@ -150,6 +174,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void BeginGamePlay()
     {
         int currentQuestionId = GetCurrentQuestionId();
+        int currentQuestId = GetCurrentQuestId();
 
         DateTime now = DateTime.Now;
         DateTime currentDay = now.Date;
@@ -175,6 +200,23 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
         }
 
+        if(differenceDays >= currentQuestId)
+        {
+            bool hasAnswered = false;
+            if (AmIMale)
+            {
+                hasAnswered = QuestData[currentQuestId].MaleFeeling.Length > 0;
+            }
+            else
+            {
+                hasAnswered = QuestData[currentQuestId].FemaleFeeling.Length > 0;
+            }
+
+            if (!hasAnswered)
+            {
+                ShowQuestNotification(currentQuestId);
+            }
+        }
     }
 
     public int GetCurrentQuestionId()
@@ -187,9 +229,24 @@ public class GameManager : MonoBehaviour, IDataPersistence
         return 0;
     }
 
+    public int GetCurrentQuestId()
+    {
+        QuestData quest = QuestData.First(p => p.MaleFeeling.Length == 0 || p.FemaleFeeling.Length == 0);
+        if(quest != null)
+        {
+            return quest.QuestId;
+        }
+        return 0;
+    }
+
     public void ShowQuestionNotification(int QuestionId)
     {
         ShowNotifcation.Invoke(QuestionId);
+    }
+
+    public void ShowQuestNotification(int QuestId)
+    {
+        QuestNotification.Invoke(QuestId);
     }
 
     void Start()

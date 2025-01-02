@@ -12,7 +12,11 @@ public enum MainSectionType
     QnAList,
     EnterAnswer,
     Answer,
-    Calendar
+    QuestList,
+    EnterQuestAnswer,
+    QuestAnswer,
+    Calendar,
+    EmoteSelection
 }
 
 [Serializable]
@@ -34,7 +38,9 @@ public class MainScreen : ScreenBase
     [SerializeField] Transform MainSectionTransform;
 
     public bool IsShowNotification { get; set; } = false;
+    public bool IsShowQuestNotification { get; set; } = false;
     public int QuestionId { get; set; } = 0;
+    public int QuestId { get; set; } = 0;
 
     private GameObject CurrentSection;
     public void Push(MainSectionType mainSectionType)
@@ -53,6 +59,7 @@ public class MainScreen : ScreenBase
     {
         UpdateData();
         GameManager.instance.ShowNotifcation += ShowNotification;
+        GameManager.instance.QuestNotification += ShowQuestNotification;
         GameManager.UpdateData += UpdateData;
         FoodBtn.onClick.AddListener(FeedTheCat);
         TabGroup.OnTabChanged += OnTabChanged;
@@ -84,6 +91,11 @@ public class MainScreen : ScreenBase
                 }
                 break;
             case 2:
+                {
+                    Push(MainSectionType.QuestList);
+                }
+                break;
+            case 3:
                 {
                     Push(MainSectionType.Calendar);
                 }
@@ -122,9 +134,28 @@ public class MainScreen : ScreenBase
         Push(MainSectionType.CatInteraction);
     }
 
+    private void ShowQuestNotification(int questId)
+    {
+        TabGroup.SetSelectionTab(0);
+        IsShowQuestNotification = true;
+        QuestId = questId;
+        Push(MainSectionType.CatInteraction);
+    }
+
     public void ShowAnswerOfQuestion(int questionId)
     {
         Push(MainSectionType.Answer);
         CurrentSection.GetComponent<AnswerSection>()?.SetData(questionId);
+    }
+
+    public void ShowAnswerOfQuest(int questId)
+    {
+        Push(MainSectionType.QuestAnswer);
+        CurrentSection.GetComponent<QuestAnswerSection>()?.SetData(questId);
+    }
+
+    public void ShowEmoteSelection()
+    {
+        Push(MainSectionType.EmoteSelection);
     }
 }

@@ -16,6 +16,7 @@ public class GameData
     public PersonData Male;
     public PersonData Female;
     public List<QuestionAndAnswer> QuestionsAndAnswers;
+    public List<QuestData> Quests;
 
     public GameData()
     {
@@ -76,6 +77,25 @@ public class QuestionAndAnswer
         Question = null;
         MaleAnswer = null;
         FemaleAnswer = null;
+    }
+}
+
+[Serializable]
+public class QuestData
+{
+    public int QuestId;
+    public bool IsLocked;
+    public string Quest;
+    public string MaleFeeling;
+    public string FemaleFeeling;
+
+    public QuestData()
+    {
+        QuestId = 0;
+        IsLocked = true;
+        Quest = null;
+        MaleFeeling = null;
+        FemaleFeeling = null;
     }
 }
 

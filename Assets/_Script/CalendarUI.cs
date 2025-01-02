@@ -41,6 +41,8 @@ public class CalendarUI : MainSection
 
         DateTime firstDayOfMonth = new DateTime(calendarSystem.year, calendarSystem.month, 1);
         int daysInMonth = DateTime.DaysInMonth(calendarSystem.year, calendarSystem.month);
+        DateTime today = calendarSystem.CurrentDate;
+        int daysOfMonth = today.Day;
 
         int startDay = (int)firstDayOfMonth.DayOfWeek;
         for (int i = 0; i < startDay; i++)
@@ -51,16 +53,26 @@ public class CalendarUI : MainSection
         for (int i = 1; i <= daysInMonth; i++)
         {
             GameObject dayButton = Instantiate(dayButtonPrefab, daysContainer);
-            dayButton.GetComponentInChildren<Text>().text = i.ToString();
+            //dayButton.GetComponentInChildren<Text>().text = i.ToString();
             int day = i;
             dayButton.GetComponent<Button>().onClick.AddListener(() => OnDayButtonClicked(day));
-            dayButton.GetComponent<CalendarItem>().Inititalize(i, 0, 0);
+            if (i <= daysOfMonth)
+            {
+                int partnerEmote = UnityEngine.Random.Range(0, 12);
+                int myEmote = UnityEngine.Random.Range(0, 12);
+                dayButton.GetComponent<CalendarItem>().Inititalize(i, partnerEmote, myEmote);
+            }
+            else
+            {
+                dayButton.GetComponent<CalendarItem>().Inititalize(i, -1, -1);
+            }
         }
     }
 
     void OnDayButtonClicked(int day)
     {
-        calendarSystem.CurrentDate = new DateTime(calendarSystem.year, calendarSystem.month, day);
-        UpdateCalendarUI();
+        //calendarSystem.CurrentDate = new DateTime(calendarSystem.year, calendarSystem.month, day);
+        //UpdateCalendarUI();
+        MainScreen.ShowEmoteSelection();
     }
 }

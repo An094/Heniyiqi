@@ -298,6 +298,32 @@ MonoBehaviour:
     Question: When did you realize you were in love with me?
     MaleAnswer: 
     FemaleAnswer: 
+  QuestData:
+  - QuestId: 0
+    IsLocked: 1
+    Quest: Take a scenic hiking trail together and photograph beautiful moments
+    MaleFeeling: 
+    FemaleFeeling: 
+  - QuestId: 1
+    IsLocked: 1
+    Quest: Plan a sunset picnic in a peaceful park
+    MaleFeeling: 
+    FemaleFeeling: 
+  - QuestId: 2
+    IsLocked: 1
+    Quest: Go stargazing and learn constellations together
+    MaleFeeling: 
+    FemaleFeeling: 
+  - QuestId: 3
+    IsLocked: 1
+    Quest: Participate in a local community garden project
+    MaleFeeling: 
+    FemaleFeeling: 
+  - QuestId: 4
+    IsLocked: 1
+    Quest: Take a couples' bike ride through scenic routes
+    MaleFeeling: 
+    FemaleFeeling: 
 --- !u!114 &658691343
 MonoBehaviour:
   m_ObjectHideFlags: 0

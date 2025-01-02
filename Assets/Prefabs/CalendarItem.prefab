@@ -360,6 +360,7 @@ MonoBehaviour:
   DayOfMonth: {fileID: 5502206823706683927}
   PartnerEmote: {fileID: 6619725843251070954}
   MyEmote: {fileID: 6230977142773075515}
+  Background: {fileID: 7199592948269408918}
   ItemConfig: {fileID: 11400000, guid: f490283812098d142bd9f01b0a3e1597, type: 2}
 --- !u!114 &7910695419258776731
 MonoBehaviour:

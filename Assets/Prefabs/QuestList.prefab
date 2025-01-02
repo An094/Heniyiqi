@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5106661388479493295}
-  - component: {fileID: 842025545972295599}
+  - component: {fileID: 1646563941947023306}
   m_Layer: 5
-  m_Name: Q&A
+  m_Name: QuestList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &842025545972295599
+--- !u!114 &1646563941947023306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,10 +46,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 122822172581325541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13c22db40cfdbde459ef88019422c55e, type: 3}
+  m_Script: {fileID: 11500000, guid: 14a520c3343f16043aaceaf51b0af8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QnATemplate: {fileID: 6626180660065027656, guid: e874b360a714c1946a89ec9c89f3a628, type: 3}
+  QuestTemplate: {fileID: 6626180660065027656, guid: dadb39e5a88638942885db8cdfed6122, type: 3}
   Content: {fileID: 8545613489995133502}
 --- !u!1 &2680273243308990341
 GameObject:
@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 270, y: -471.4528}
+  m_AnchoredPosition: {x: 270, y: -480}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7064642021048659998
